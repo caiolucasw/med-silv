@@ -1,0 +1,4 @@
+ ALTER TABLE consulta
+ ADD COLUMN `status` TINYINT DEFAULT 1 NOT NULL,
+ ADD COLUMN `motivo_cancelamento` VARCHAR(255) DEFAULT NULL,
+ ADD COLUMN `data_cancelamento`  DATETIME DEFAULT NULL;

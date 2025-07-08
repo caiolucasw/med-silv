@@ -1,0 +1,2 @@
+ALTER TABLE paciente
+ADD COLUMN `telefone` VARCHAR(15) DEFAULT NULL;
