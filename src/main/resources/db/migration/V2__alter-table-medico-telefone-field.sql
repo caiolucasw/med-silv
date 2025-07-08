@@ -1,2 +1,2 @@
-ALTER TABLE medicos
+ALTER TABLE medico
 ADD COLUMN `telefone` VARCHAR(15) DEFAULT NULL;

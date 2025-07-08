@@ -1,13 +1,12 @@
 package com.medsilveira.api.entities;
 
-import com.medsilveira.api.dto.MedicoAtualizaDadosDTO;
-import com.medsilveira.api.dto.MedicoCadastroDTO;
+import com.medsilveira.api.dto.medicos.MedicoAtualizaDadosDTO;
+import com.medsilveira.api.dto.medicos.MedicoCadastroDTO;
 import com.medsilveira.api.enums.Especialidade;
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder.In;
 import lombok.*;
 
-@Table(name = "medicos")
+@Table(name = "medico")
 @Entity(name = "Medico")
 @NoArgsConstructor
 @Getter
@@ -30,7 +29,6 @@ public class Medico {
 
     private Integer ativo;
 
-
     public Medico(MedicoCadastroDTO dadosMedico) {
         this.nome = dadosMedico.nome();
         this.email = dadosMedico.email();
@@ -40,7 +38,6 @@ public class Medico {
         this.endereco = new Endereco(dadosMedico.endereco());
         this.ativo = 1;
     }
-
 
     public void atualizarInformacoes(MedicoAtualizaDadosDTO dadosMedico) {
         if (dadosMedico.nome() != null) {
