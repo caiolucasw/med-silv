@@ -38,4 +38,7 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
       limit 1
       """)
   Medico findRandomMedicoByEspecialidadeAndAvailable(Especialidade especialidade, LocalDateTime data);
+
+  @Query("select count(m) > 0 from Medico m where m.id = :medicoId and m.ativo = 1")
+  boolean existsByIdAndAtivo(Long medicoId);
 }

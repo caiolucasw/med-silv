@@ -14,9 +14,11 @@ import com.medsilveira.api.dto.consultas.CancelamentoConsultaDTO;
 import com.medsilveira.api.dto.consultas.ConsultaDetalheDTO;
 import com.medsilveira.api.services.ConsultaService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
+@SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("consultas")
 public class ConsultaController {
@@ -27,8 +29,8 @@ public class ConsultaController {
   @PostMapping
   @Transactional
   public ResponseEntity<ConsultaDetalheDTO> agendar(@RequestBody @Valid AgendamentoConsultaDTO dados) {
-    consultaService.agendar(dados);
-    return ResponseEntity.ok(new ConsultaDetalheDTO(null, null, null, null));
+    var consulta = consultaService.agendar(dados);
+    return ResponseEntity.ok(consulta);
   }
 
   @DeleteMapping("/{id}")

@@ -18,4 +18,7 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
   void delete(Long id);
 
   Page<Paciente> findAllByAtivo(Pageable pagination, int i);
+
+  @Query("select count(p) > 0 from Paciente p where p.id = :pacienteId and p.ativo = 1")
+  boolean existsByIdAndAtivo(Long pacienteId);
 }

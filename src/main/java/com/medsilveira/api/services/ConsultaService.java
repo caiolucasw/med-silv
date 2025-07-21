@@ -1,12 +1,14 @@
 package com.medsilveira.api.services;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.medsilveira.api.dto.consultas.AgendamentoConsultaDTO;
 import com.medsilveira.api.dto.consultas.CancelamentoConsultaDTO;
+import com.medsilveira.api.dto.consultas.ConsultaDetalheDTO;
 import com.medsilveira.api.entities.Consulta;
 import com.medsilveira.api.entities.Medico;
 import com.medsilveira.api.entities.Paciente;
@@ -14,8 +16,7 @@ import com.medsilveira.api.enums.Especialidade;
 import com.medsilveira.api.repositories.ConsultaRepository;
 import com.medsilveira.api.repositories.MedicoRepository;
 import com.medsilveira.api.repositories.PacienteRepository;
-
-import jakarta.validation.Valid;
+import com.medsilveira.api.validations.consulta.ConsultaValidationInterface;
 
 @Service
 public class ConsultaService {
@@ -29,7 +30,10 @@ public class ConsultaService {
   @Autowired
   private PacienteRepository pacienteRepository;
 
-  public void agendar(AgendamentoConsultaDTO dadosConsulta) {
+  @Autowired
+  private List<ConsultaValidationInterface> validations;
+
+  public ConsultaDetalheDTO agendar(AgendamentoConsultaDTO dadosConsulta) {
 
     Paciente paciente = pacienteRepository.findById(dadosConsulta.pacienteId())
         .orElseThrow(() -> new IllegalArgumentException("Paciente não encontrado"));
@@ -37,6 +41,8 @@ public class ConsultaService {
     if (dadosConsulta.medicoId() != null && !medicoRepository.existsById(dadosConsulta.medicoId()) == false) {
       throw new IllegalArgumentException("Médico não encontrado");
     }
+
+    validations.forEach(validation -> validation.validar(dadosConsulta));
 
     Medico medico = null;
     if (dadosConsulta.medicoId() == null) {
@@ -48,6 +54,11 @@ public class ConsultaService {
 
     Consulta consulta = new Consulta(null, medico, paciente, dadosConsulta.dataConsulta());
     consultaRepository.save(consulta);
+
+    ConsultaDetalheDTO consultaDetalhe = new ConsultaDetalheDTO(consulta.getId(), consulta.getMedico().getId(),
+        consulta.getPaciente().getId(), consulta.getDataConsulta());
+
+    return consultaDetalhe;
   }
 
   private Medico escolherMedicoAleatorio(Especialidade especialidade, LocalDateTime dataConsulta) {

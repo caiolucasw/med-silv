@@ -5,6 +5,9 @@ import com.medsilveira.api.dto.pacientes.PacienteCadastroDTO;
 import com.medsilveira.api.dto.pacientes.PacienteDetalheDTO;
 import com.medsilveira.api.dto.pacientes.PacienteListItemDTO;
 import com.medsilveira.api.repositories.PacienteRepository;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 import com.medsilveira.api.entities.Paciente;
 import jakarta.validation.Valid;
 
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.bind.annotation.PathVariable;
 
+@SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("/pacientes")
 public class PacienteController {

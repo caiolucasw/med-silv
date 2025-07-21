@@ -31,12 +31,9 @@ public class AutorizacaoFilter extends OncePerRequestFilter {
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
-
-    System.out.println("hahahahahahahahahahahahahahhhaha");
     var authorizationHeader = request.getHeader("Authorization");
     var token = authorizationHeader != null ? authorizationHeader.replace("Bearer ", "") : null;
 
-    System.out.println("dasdasdsda a");
     if (token != null) {
       DecodedJWT decodedJWT = tokenService.verificaToken(token);
       autenticarUsuarioByToken(decodedJWT);
