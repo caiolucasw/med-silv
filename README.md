@@ -15,12 +15,11 @@
 - **Spring Boot**
 - **Spring Web**
 - **Spring Data JPA**
-- **H2 / PostgreSQL**
 - **Lombok**
 - **Swagger (Springdoc OpenAPI)**
 - **Maven**
 - **JUnit / Mockito**
+- **Docker**
+- **Amazon EC2**
 
-## 📄 Documentação da API
 
-A documentação da API está disponível via Swagger UI no seguinte endpoint:
